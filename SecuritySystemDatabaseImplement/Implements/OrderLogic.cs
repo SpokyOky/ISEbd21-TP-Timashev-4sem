@@ -41,6 +41,7 @@ namespace SecuritySystemDatabaseImplement.Implements
                 context.SaveChanges();
             }
         }
+
         public void Delete(OrderBindingModel model)
         {
             using (var context = new SecuritySystemDatabase())
