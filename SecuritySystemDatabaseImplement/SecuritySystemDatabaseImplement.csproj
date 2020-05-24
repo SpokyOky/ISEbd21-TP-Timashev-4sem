@@ -162,6 +162,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implements\EquipmentLogic.cs" />
+    <Compile Include="Implements\OrderLogic.cs" />
+    <Compile Include="Implements\RawLogic.cs" />
     <Compile Include="Migrations\20200306063158_InitialCreate.cs" />
     <Compile Include="Migrations\20200306063158_InitialCreate.designer.cs">
       <DependentUpon>20200306063158_InitialCreate.cs</DependentUpon>
