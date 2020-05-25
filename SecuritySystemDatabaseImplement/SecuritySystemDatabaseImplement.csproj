@@ -165,13 +165,9 @@
     <Compile Include="Implements\EquipmentLogic.cs" />
     <Compile Include="Implements\OrderLogic.cs" />
     <Compile Include="Implements\RawLogic.cs" />
-    <Compile Include="Migrations\20200306063158_InitialCreate.cs" />
-    <Compile Include="Migrations\20200306063158_InitialCreate.designer.cs">
-      <DependentUpon>20200306063158_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20200319184735_InitialCreate_2_test.cs" />
-    <Compile Include="Migrations\20200319184735_InitialCreate_2_test.designer.cs">
-      <DependentUpon>20200319184735_InitialCreate_2_test.cs</DependentUpon>
+    <Compile Include="Migrations\20200524195709_Initial-Create.cs" />
+    <Compile Include="Migrations\20200524195709_Initial-Create.designer.cs">
+      <DependentUpon>20200524195709_Initial-Create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\SecuritySystemDatabaseModelSnapshot.cs" />
     <Compile Include="SecuritySystemDatabase.cs" />
@@ -191,6 +187,7 @@
       <Name>SecurityBusinessLogic</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

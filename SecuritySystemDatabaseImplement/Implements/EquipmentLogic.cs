@@ -21,16 +21,17 @@ namespace SecuritySystemDatabaseImplement.Implements
                 {
                     try
                     {
-                        Equipment element = context.Equipments.FirstOrDefault(rec =>
-                       rec.EquipmentName == model.EquipmentName && rec.Id != model.Id);
+                        Equipment element = context.Equipments.FirstOrDefault(rec => rec.EquipmentName == model.EquipmentName && rec.Id != model.Id);
+
                         if (element != null)
                         {
                             throw new Exception("Уже есть изделие с таким названием");
                         }
+
                         if (model.Id.HasValue)
                         {
-                            element = context.Equipments.FirstOrDefault(rec => rec.Id ==
-                           model.Id);
+                            element = context.Equipments.FirstOrDefault(rec => rec.Id == model.Id);
+
                             if (element == null)
                             {
                                 throw new Exception("Элемент не найден");
@@ -41,28 +42,30 @@ namespace SecuritySystemDatabaseImplement.Implements
                             element = new Equipment();
                             context.Equipments.Add(element);
                         }
+
                         element.EquipmentName = model.EquipmentName;
                         element.Cost = model.Cost;
+
                         context.SaveChanges();
+
                         if (model.Id.HasValue)
                         {
-                            var equipmentRaws = context.EquipmentRaws.Where(rec
-                           => rec.EquipmentId == model.Id.Value).ToList();
-                            // удалили те, которых нет в модели
-                            context.EquipmentRaws.RemoveRange(equipmentRaws.Where(rec =>
-                            !model.EquipmentRaws.ContainsKey(rec.RawId)).ToList());
+                            var equipmentRaws = context.EquipmentRaws.Where(rec => rec.EquipmentId == model.Id.Value).ToList();
+                            context.EquipmentRaws.RemoveRange(equipmentRaws.Where(rec => !model.EquipmentRaws.ContainsKey(rec.RawId)).ToList());
+
                             context.SaveChanges();
-                            // обновили количество у существующих записей
+
                             foreach (var updateRaw in equipmentRaws)
                             {
                                 updateRaw.Count =
-                               model.EquipmentRaws[updateRaw.RawId].Item2;
+                                model.EquipmentRaws[updateRaw.RawId].Item2;
 
                                 model.EquipmentRaws.Remove(updateRaw.RawId);
                             }
+
                             context.SaveChanges();
                         }
-                        // добавили новые
+
                         foreach (var pc in model.EquipmentRaws)
                         {
                             context.EquipmentRaws.Add(new EquipmentRaw
@@ -71,8 +74,10 @@ namespace SecuritySystemDatabaseImplement.Implements
                                 RawId = pc.Key,
                                 Count = pc.Value.Item2
                             });
+
                             context.SaveChanges();
                         }
+
                         transaction.Commit();
                     }
                     catch (Exception)
@@ -92,11 +97,9 @@ namespace SecuritySystemDatabaseImplement.Implements
                 {
                     try
                     {
-                        // удаяем записи по компонентам при удалении изделия
-                        context.EquipmentRaws.RemoveRange(context.EquipmentRaws.Where(rec =>
-                        rec.EquipmentId == model.Id));
-                        Equipment element = context.Equipments.FirstOrDefault(rec => rec.Id
-                       == model.Id);
+                        context.EquipmentRaws.RemoveRange(context.EquipmentRaws.Where(rec => rec.EquipmentId == model.Id));
+                        Equipment element = context.Equipments.FirstOrDefault(rec => rec.Id == model.Id);
+
                         if (element != null)
                         {
                             context.Equipments.Remove(element);
@@ -106,6 +109,7 @@ namespace SecuritySystemDatabaseImplement.Implements
                         {
                             throw new Exception("Элемент не найден");
                         }
+
                         transaction.Commit();
                     }
                     catch (Exception)
@@ -124,18 +128,17 @@ namespace SecuritySystemDatabaseImplement.Implements
                 return context.Equipments
                 .Where(rec => model == null || rec.Id == model.Id)
                 .ToList()
-               .Select(rec => new EquipmentViewModel
-               {
-                   Id = rec.Id,
-                   EquipmentName = rec.EquipmentName,
-                   Cost = rec.Cost,
-                   EquipmentRaws = context.EquipmentRaws
-                .Include(recPC => recPC.Raw)
-               .Where(recPC => recPC.EquipmentId == rec.Id)
-               .ToDictionary(recPC => recPC.RawId, recPC =>
-                (recPC.Raw?.RawName, recPC.Count))
-               })
-               .ToList();
+                .Select(rec => new EquipmentViewModel
+                {
+                    Id = rec.Id,
+                    EquipmentName = rec.EquipmentName,
+                    Cost = rec.Cost,
+                    EquipmentRaws = context.EquipmentRaws
+                    .Include(recPC => recPC.Raw)
+                    .Where(recPC => recPC.EquipmentId == rec.Id)
+                    .ToDictionary(recPC => recPC.RawId, recPC => (recPC.Raw?.RawName, recPC.Count))
+                })
+                .ToList();
             }
         }
     }
