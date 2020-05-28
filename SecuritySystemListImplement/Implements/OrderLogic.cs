@@ -1,4 +1,5 @@
 ﻿using SecurityBusinessLogic.BindingModels;
+using SecurityBusinessLogic.Enums;
 using SecurityBusinessLogic.Interfaces;
 using SecurityBusinessLogic.ViewModels;
 using SecuritySystemListImplement.Models;
@@ -87,6 +88,8 @@ namespace SecuritySystemListImplement.Implements
                     model != null && order.Id == model.Id
                     || model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo
                     || model.ClientId.HasValue && order.ClientId == model.ClientId
+                    || model.FreeOrders.HasValue && model.FreeOrders.Value
+                    || model.ImplementerId.HasValue && order.ImplementerId == model.ImplementerId && order.Status == OrderStatus.Выполняется
                 )
                 {
                     result.Add(CreateViewModel(order));
@@ -101,17 +104,17 @@ namespace SecuritySystemListImplement.Implements
 
         private OrderViewModel CreateViewModel(Order order)
         {
-            string equipmentName = null;
+            string productName = null;
 
-            foreach (var equipment in source.Equipments)
+            foreach (var product in source.Equipments)
             {
-                if (equipment.Id == order.EquipmentId)
+                if (product.Id == order.EquipmentId)
                 {
-                    equipmentName = equipment.EquipmentName;
+                    productName = product.EquipmentName;
                 }
             }
 
-            if (equipmentName == null)
+            if (productName == null)
             {
                 throw new Exception("Продукт не найден");
             }
@@ -121,7 +124,7 @@ namespace SecuritySystemListImplement.Implements
                 Id = order.Id,
                 ClientId = order.ClientId,
                 EquipmentId = order.EquipmentId,
-                EquipmentName = equipmentName,
+                EquipmentName = productName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,

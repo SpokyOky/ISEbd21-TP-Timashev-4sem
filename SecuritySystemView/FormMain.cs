@@ -16,13 +16,16 @@ namespace SecuritySystemView
 
         private readonly ReportLogic reportLogic;
 
+        private readonly WorkModeling work;
+
         private readonly IOrderLogic orderLogic;
 
-        public FormMain(MainLogic mainLogic, ReportLogic reportLogic, IOrderLogic orderLogic)
+        public FormMain(MainLogic mainLogic, ReportLogic reportLogic, WorkModeling work, IOrderLogic orderLogic)
         {
             InitializeComponent();
             this.mainLogic = mainLogic;
             this.reportLogic = reportLogic;
+            this.work = work;
             this.orderLogic = orderLogic;
         }
 
@@ -43,7 +46,8 @@ namespace SecuritySystemView
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
                     dataGridView.Columns[2].Visible = false;
-                    dataGridView.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dataGridView.Columns[3].Visible = false;
+                    dataGridView.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
             }
             catch (Exception ex)
@@ -71,50 +75,18 @@ namespace SecuritySystemView
             form.ShowDialog();
         }
 
+        private void исполнителиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormImplementers>();
+            form.ShowDialog();
+        }
+
         private void buttonCreateOrder_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormCreateOrder>();
 
             form.ShowDialog();
             LoadData();
-        }
-
-        private void buttonTakeOrderInWork_Click(object sender, EventArgs e)
-        {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-
-                try
-                {
-                    mainLogic.TakeOrderInWork(new ChangeStatusBindingModel { OrderId = id });
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void buttonOrderReady_Click(object sender, EventArgs e)
-        {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-
-                try
-                {
-                    mainLogic.FinishOrder(new ChangeStatusBindingModel { OrderId = id });
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                }
-            }
         }
 
         private void buttonPayOrder_Click(object sender, EventArgs e)
@@ -163,6 +135,11 @@ namespace SecuritySystemView
         {
             var form = Container.Resolve<FormReportOrders>();
             form.ShowDialog();
+        }
+
+        private void запускРаботToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            work.DoWork();
         }
     }
 }

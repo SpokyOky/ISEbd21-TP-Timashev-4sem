@@ -16,6 +16,8 @@ namespace SecuritySystemDatabaseImplement.Models
 
         public int EquipmentId { get; set; }
 
+        public int? ImplementerId { get; set; }
+
         [Required]
         public int Count { get; set; }
 
@@ -33,5 +35,7 @@ namespace SecuritySystemDatabaseImplement.Models
         public Equipment Equipment { get; set; }
 
         public Client Client { get; set; }
+
+        public Implementer Implementer { get; set; }
     }
 }

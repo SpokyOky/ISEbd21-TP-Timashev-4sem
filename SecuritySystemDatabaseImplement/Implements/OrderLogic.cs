@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SecurityBusinessLogic.BindingModels;
+using SecurityBusinessLogic.Enums;
 using SecurityBusinessLogic.Interfaces;
 using SecurityBusinessLogic.ViewModels;
 using SecuritySystemDatabaseImplement.Models;
@@ -35,7 +36,8 @@ namespace SecuritySystemDatabaseImplement.Implements
                 }
 
                 element.EquipmentId = model.EquipmentId == 0 ? element.EquipmentId : model.EquipmentId;
-                element.ClientId = model.ClientId == null ? element.ClientId : (int)model.ClientId;
+                element.ClientId = model.ClientId.Value;
+                element.ImplementerId = model.ImplementerId;
                 element.Count = model.Count;
                 element.Sum = model.Sum;
                 element.Status = model.Status;
@@ -74,13 +76,17 @@ namespace SecuritySystemDatabaseImplement.Implements
                     || rec.Id == model.Id && model.Id.HasValue
                     || model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo
                     || model.ClientId.HasValue && rec.ClientId == model.ClientId
+                    || model.FreeOrders.HasValue && model.FreeOrders.Value && !rec.ImplementerId.HasValue
+                    || model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется
                 )
                 .Include(rec => rec.Equipment)
                 .Include(rec => rec.Client)
+                .Include(rec => rec.Implementer)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     ClientId = rec.ClientId,
+                    ImplementerId = rec.ImplementerId,
                     EquipmentId = rec.EquipmentId,
                     Count = rec.Count,
                     Sum = rec.Sum,
@@ -88,7 +94,8 @@ namespace SecuritySystemDatabaseImplement.Implements
                     DateCreate = rec.DateCreate,
                     DateImplement = rec.DateImplement,
                     EquipmentName = rec.Equipment.EquipmentName,
-                    ClientFIO = rec.Client.FIO
+                    ClientFIO = rec.Client.FIO,
+                    ImplementerFIO = rec.ImplementerId.HasValue ? rec.Implementer.ImplementerFIO : string.Empty,
                 })
                 .ToList();
             }

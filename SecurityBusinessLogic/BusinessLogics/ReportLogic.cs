@@ -29,13 +29,13 @@ namespace SecurityBusinessLogic.BusinessLogics
 
             foreach (var equipment in equipments)
             {
-                foreach (var pc in equipment.EquipmentRaws)
+                foreach (var er in equipment.EquipmentRaws)
                 {
                     var record = new ReportEquipmentRawViewModel
                     {
                         EquipmentName = equipment.EquipmentName,
-                        RawName = pc.Value.Item1,
-                        Count = pc.Value.Item2
+                        RawName = er.Value.Item1,
+                        Count = er.Value.Item2
                     };
 
                     list.Add(record);
