@@ -165,6 +165,7 @@
     <Compile Include="Implements\ClientLogic.cs" />
     <Compile Include="Implements\EquipmentLogic.cs" />
     <Compile Include="Implements\ImplementerLogic.cs" />
+    <Compile Include="Implements\MessageInfoLogic.cs" />
     <Compile Include="Implements\OrderLogic.cs" />
     <Compile Include="Implements\RawLogic.cs" />
     <Compile Include="Migrations\20200524195709_Initial-Create.cs" />
@@ -179,9 +180,14 @@
     <Compile Include="Migrations\20200528155025_lab6.designer.cs">
       <DependentUpon>20200528155025_lab6.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20200528162728_lab7.cs" />
+    <Compile Include="Migrations\20200528162728_lab7.designer.cs">
+      <DependentUpon>20200528162728_lab7.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\SecuritySystemDatabaseModelSnapshot.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Implementer.cs" />
+    <Compile Include="Models\MessageInfo.cs" />
     <Compile Include="SecuritySystemDatabase.cs" />
     <Compile Include="Models\Equipment.cs" />
     <Compile Include="Models\EquipmentRaw.cs" />
