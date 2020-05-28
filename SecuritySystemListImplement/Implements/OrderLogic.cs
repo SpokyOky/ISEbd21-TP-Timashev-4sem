@@ -13,33 +13,35 @@ namespace SecuritySystemListImplement.Implements
     public class OrderLogic : IOrderLogic
     {
         private readonly DataListSingleton source;
+
         public OrderLogic()
         {
             source = DataListSingleton.GetInstance();
         }
+
         public void CreateOrUpdate(OrderBindingModel model)
         {
-            Order tempOrder = model.Id.HasValue ? null : new Order
+            Order tempOrder = model.Id.HasValue ? null : new Order { Id = 1 };
+
+            foreach (var order in source.Orders)
             {
-                Id = 1
-            };
-            foreach (var Order in source.Orders)
-            {
-                if (!model.Id.HasValue && Order.Id >= tempOrder.Id)
+                if (!model.Id.HasValue && order.Id >= tempOrder.Id)
                 {
-                    tempOrder.Id = Order.Id + 1;
+                    tempOrder.Id = order.Id + 1;
                 }
-                else if (model.Id.HasValue && Order.Id == model.Id)
+                else if (model.Id.HasValue && order.Id == model.Id)
                 {
-                    tempOrder = Order;
+                    tempOrder = order;
                 }
             }
+
             if (model.Id.HasValue)
             {
                 if (tempOrder == null)
                 {
                     throw new Exception("Элемент не найден");
                 }
+
                 CreateModel(model, tempOrder);
             }
             else
@@ -52,65 +54,79 @@ namespace SecuritySystemListImplement.Implements
         {
             for (int i = 0; i < source.Orders.Count; ++i)
             {
-                if (source.Orders[i].Id == model.Id.Value)
+                if (source.Orders[i].Id == model.Id)
                 {
                     source.Orders.RemoveAt(i);
                     return;
                 }
             }
+
             throw new Exception("Элемент не найден");
+        }
+
+        private Order CreateModel(OrderBindingModel model, Order order)
+        {
+            order.EquipmentId = model.EquipmentId;
+            order.Count = model.Count;
+            order.ClientId = (int)model.ClientId;
+            order.DateCreate = model.DateCreate;
+            order.DateImplement = model.DateImplement;
+            order.Sum = model.Sum;
+            order.Status = model.Status;
+
+            return order;
         }
 
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
             List<OrderViewModel> result = new List<OrderViewModel>();
-            foreach (var Order in source.Orders)
+
+            foreach (var order in source.Orders)
             {
-                if (model != null)
+                if (
+                    model != null && order.Id == model.Id
+                    || model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo
+                    || model.ClientId.HasValue && order.ClientId == model.ClientId
+                )
                 {
-                    if (Order.Id == model.Id)
-                    {
-                        result.Add(CreateViewModel(Order));
-                        break;
-                    }
-                    continue;
+                    result.Add(CreateViewModel(order));
+                    break;
                 }
-                result.Add(CreateViewModel(Order));
+
+                result.Add(CreateViewModel(order));
             }
+
             return result;
         }
 
-        private Order CreateModel(OrderBindingModel model, Order Order)
+        private OrderViewModel CreateViewModel(Order order)
         {
-            Order.EquipmentId = model.EquipmentId == 0 ? Order.EquipmentId : model.EquipmentId;
-            Order.Count = model.Count;
-            Order.Sum = model.Sum;
-            Order.Status = model.Status;
-            Order.DateCreate = model.DateCreate;
-            Order.DateImplement = model.DateImplement;
-            return Order;
-        }
+            string equipmentName = null;
 
-        private OrderViewModel CreateViewModel(Order Order)
-        {
-            string EquipmentName = "";
-            for (int j = 0; j < source.Equipments.Count; ++j)
+            foreach (var equipment in source.Equipments)
             {
-                if (source.Equipments[j].Id == Order.EquipmentId)
+                if (equipment.Id == order.EquipmentId)
                 {
-                    EquipmentName = source.Equipments[j].EquipmentName;
-                    break;
+                    equipmentName = equipment.EquipmentName;
                 }
             }
+
+            if (equipmentName == null)
+            {
+                throw new Exception("Продукт не найден");
+            }
+
             return new OrderViewModel
             {
-                Id = Order.Id,
-                EquipmentName = EquipmentName,
-                Count = Order.Count,
-                Sum = Order.Sum,
-                Status = Order.Status,
-                DateCreate = Order.DateCreate,
-                DateImplement = Order.DateImplement
+                Id = order.Id,
+                ClientId = order.ClientId,
+                EquipmentId = order.EquipmentId,
+                EquipmentName = equipmentName,
+                Count = order.Count,
+                Sum = order.Sum,
+                Status = order.Status,
+                DateCreate = order.DateCreate,
+                DateImplement = order.DateImplement
             };
         }
     }

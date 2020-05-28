@@ -50,12 +50,12 @@ namespace SecuritySystemDatabaseImplement.Implements
 
                         if (model.Id.HasValue)
                         {
-                            var equipmentRaws = context.EquipmentRaws.Where(rec => rec.EquipmentId == model.Id.Value).ToList();
-                            context.EquipmentRaws.RemoveRange(equipmentRaws.Where(rec => !model.EquipmentRaws.ContainsKey(rec.RawId)).ToList());
+                            var productRaws = context.EquipmentRaws.Where(rec => rec.EquipmentId == model.Id.Value).ToList();
+                            context.EquipmentRaws.RemoveRange(productRaws.Where(rec => !model.EquipmentRaws.ContainsKey(rec.RawId)).ToList());
 
                             context.SaveChanges();
 
-                            foreach (var updateRaw in equipmentRaws)
+                            foreach (var updateRaw in productRaws)
                             {
                                 updateRaw.Count =
                                 model.EquipmentRaws[updateRaw.RawId].Item2;
