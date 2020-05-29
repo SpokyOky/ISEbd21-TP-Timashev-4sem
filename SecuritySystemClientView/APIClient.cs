@@ -47,6 +47,5 @@ namespace SecuritySystemClientView
                 throw new Exception(result);
             }
         }
-
     }
 }

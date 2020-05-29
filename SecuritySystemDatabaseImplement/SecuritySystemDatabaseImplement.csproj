@@ -170,9 +170,9 @@
     <Compile Include="Migrations\20200524195709_Initial-Create.designer.cs">
       <DependentUpon>20200524195709_Initial-Create.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20200529093234_lab5.cs" />
-    <Compile Include="Migrations\20200529093234_lab5.designer.cs">
-      <DependentUpon>20200529093234_lab5.cs</DependentUpon>
+    <Compile Include="Migrations\20200529101406_lab5.cs" />
+    <Compile Include="Migrations\20200529101406_lab5.designer.cs">
+      <DependentUpon>20200529101406_lab5.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\SecuritySystemDatabaseModelSnapshot.cs" />
     <Compile Include="Models\Client.cs" />
