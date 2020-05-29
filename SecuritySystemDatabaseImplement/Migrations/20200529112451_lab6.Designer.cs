@@ -10,7 +10,7 @@ using SecuritySystemDatabaseImplement;
 namespace SecuritySystemDatabaseImplement.Migrations
 {
     [DbContext(typeof(SecuritySystemDatabase))]
-    [Migration("20200528155025_lab6")]
+    [Migration("20200529112451_lab6")]
     partial class lab6
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,8 +82,7 @@ namespace SecuritySystemDatabaseImplement.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EquipmentId")
-                        .IsUnique();
+                    b.HasIndex("EquipmentId");
 
                     b.HasIndex("RawId");
 
@@ -172,8 +171,8 @@ namespace SecuritySystemDatabaseImplement.Migrations
             modelBuilder.Entity("SecuritySystemDatabaseImplement.Models.EquipmentRaw", b =>
                 {
                     b.HasOne("SecuritySystemDatabaseImplement.Models.Equipment", "Equipment")
-                        .WithOne("EquipmentRaw")
-                        .HasForeignKey("SecuritySystemDatabaseImplement.Models.EquipmentRaw", "EquipmentId")
+                        .WithMany("EquipmentRaw")
+                        .HasForeignKey("EquipmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

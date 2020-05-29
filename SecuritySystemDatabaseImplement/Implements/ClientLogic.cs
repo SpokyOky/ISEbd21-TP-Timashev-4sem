@@ -38,7 +38,9 @@ namespace SecuritySystemDatabaseImplement.Implements
                     context.Clients.Add(element);
                 }
 
+                element.FIO = model.FIO;
                 element.Email = model.Email;
+                element.Password = model.Password;
 
                 context.SaveChanges();
             }
