@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SecuritySystemDatabaseImplement.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class lab4 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -88,8 +88,7 @@ namespace SecuritySystemDatabaseImplement.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_EquipmentRaws_EquipmentId",
                 table: "EquipmentRaws",
-                column: "EquipmentId",
-                unique: true);
+                column: "EquipmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EquipmentRaws_RawId",
