@@ -140,11 +140,11 @@ namespace SecuritySystemFileImplemet
             if (Raws != null)
             {
                 var xElement = new XElement("Raws");
-                foreach (var component in Raws)
+                foreach (var raw in Raws)
                 {
                     xElement.Add(new XElement("Raw",
-                    new XAttribute("Id", component.Id),
-                    new XElement("RawName", component.RawName)));
+                    new XAttribute("Id", raw.Id),
+                    new XElement("RawName", raw.RawName)));
                 }
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(RawFileName);
@@ -176,12 +176,12 @@ namespace SecuritySystemFileImplemet
             if (Equipments != null)
             {
                 var xElement = new XElement("Equipments");
-                foreach (var product in Equipments)
+                foreach (var equipment in Equipments)
                 {
                     xElement.Add(new XElement("Equipment",
-                    new XAttribute("Id", product.Id),
-                    new XElement("EquipmentName", product.EquipmentName),
-                    new XElement("Cost", product.Cost)));
+                    new XAttribute("Id", equipment.Id),
+                    new XElement("EquipmentName", equipment.EquipmentName),
+                    new XElement("Cost", equipment.Cost)));
                 }
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(EquipmentFileName);
@@ -193,13 +193,13 @@ namespace SecuritySystemFileImplemet
             if (EquipmentRaws != null)
             {
                 var xElement = new XElement("EquipmentRaws");
-                foreach (var productRaw in EquipmentRaws)
+                foreach (var equipmentRaw in EquipmentRaws)
                 {
                     xElement.Add(new XElement("EquipmentRaw",
-                    new XAttribute("Id", productRaw.Id),
-                    new XElement("EquipmentId", productRaw.EquipmentId),
-                    new XElement("RawId", productRaw.RawId),
-                    new XElement("Count", productRaw.Count)));
+                    new XAttribute("Id", equipmentRaw.Id),
+                    new XElement("EquipmentId", equipmentRaw.EquipmentId),
+                    new XElement("RawId", equipmentRaw.RawId),
+                    new XElement("Count", equipmentRaw.Count)));
                 }
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(EquipmentRawFileName);

@@ -88,8 +88,7 @@ namespace SecuritySystemDatabaseImplement.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_EquipmentRaws_EquipmentId",
                 table: "EquipmentRaws",
-                column: "EquipmentId",
-                unique: true);
+                column: "EquipmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EquipmentRaws_RawId",
