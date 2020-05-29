@@ -140,11 +140,11 @@ namespace SecuritySystemFileImplemet
             if (Raws != null)
             {
                 var xElement = new XElement("Raws");
-                foreach (var component in Raws)
+                foreach (var raw in Raws)
                 {
                     xElement.Add(new XElement("Raw",
-                    new XAttribute("Id", component.Id),
-                    new XElement("RawName", component.RawName)));
+                    new XAttribute("Id", raw.Id),
+                    new XElement("RawName", raw.RawName)));
                 }
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(RawFileName);
