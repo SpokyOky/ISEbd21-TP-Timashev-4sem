@@ -23,7 +23,7 @@ namespace SecuritySystemClientView
             {
                 comboBoxEquipment.DisplayMember = "EquipmentName";
                 comboBoxEquipment.ValueMember = "Id";
-                comboBoxEquipment.DataSource = APIClient.GetRequest<List<EquipmentViewModel>>("api/main/getproductlist");
+                comboBoxEquipment.DataSource = APIClient.GetRequest<List<EquipmentViewModel>>("api/main/getequipmentlist");
                 comboBoxEquipment.SelectedItem = null;
             }
             catch (Exception ex)
@@ -39,9 +39,9 @@ namespace SecuritySystemClientView
                 try
                 {
                     int id = Convert.ToInt32(comboBoxEquipment.SelectedValue);
-                    EquipmentViewModel product = APIClient.GetRequest<EquipmentViewModel>($"api/main/getproduct?productId={id}");
+                    EquipmentViewModel equipment = APIClient.GetRequest<EquipmentViewModel>($"api/main/getequipment?equipmentId={id}");
                     int count = Convert.ToInt32(textBoxCount.Text);
-                    textBoxSum.Text = (count * product.Cost).ToString();
+                    textBoxSum.Text = (count * equipment.Cost).ToString();
                 }
                 catch (Exception ex)
                 {
