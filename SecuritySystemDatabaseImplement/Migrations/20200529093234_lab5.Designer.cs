@@ -10,14 +10,14 @@ using SecuritySystemDatabaseImplement;
 namespace SecuritySystemDatabaseImplement.Migrations
 {
     [DbContext(typeof(SecuritySystemDatabase))]
-    [Migration("20200526170617_lab5")]
+    [Migration("20200529093234_lab5")]
     partial class lab5
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2")
+                .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -82,8 +82,7 @@ namespace SecuritySystemDatabaseImplement.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EquipmentId")
-                        .IsUnique();
+                    b.HasIndex("EquipmentId");
 
                     b.HasIndex("RawId");
 
@@ -146,8 +145,8 @@ namespace SecuritySystemDatabaseImplement.Migrations
             modelBuilder.Entity("SecuritySystemDatabaseImplement.Models.EquipmentRaw", b =>
                 {
                     b.HasOne("SecuritySystemDatabaseImplement.Models.Equipment", "Equipment")
-                        .WithOne("EquipmentRaw")
-                        .HasForeignKey("SecuritySystemDatabaseImplement.Models.EquipmentRaw", "EquipmentId")
+                        .WithMany("EquipmentRaw")
+                        .HasForeignKey("EquipmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
