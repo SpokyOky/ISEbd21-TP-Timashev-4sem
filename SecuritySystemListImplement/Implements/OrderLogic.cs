@@ -104,17 +104,17 @@ namespace SecuritySystemListImplement.Implements
 
         private OrderViewModel CreateViewModel(Order order)
         {
-            string productName = null;
+            string equipmentName = null;
 
-            foreach (var product in source.Equipments)
+            foreach (var equipment in source.Equipments)
             {
-                if (product.Id == order.EquipmentId)
+                if (equipment.Id == order.EquipmentId)
                 {
-                    productName = product.EquipmentName;
+                    equipmentName = equipment.EquipmentName;
                 }
             }
 
-            if (productName == null)
+            if (equipmentName == null)
             {
                 throw new Exception("Продукт не найден");
             }
@@ -124,7 +124,7 @@ namespace SecuritySystemListImplement.Implements
                 Id = order.Id,
                 ClientId = order.ClientId,
                 EquipmentId = order.EquipmentId,
-                EquipmentName = productName,
+                EquipmentName = equipmentName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,

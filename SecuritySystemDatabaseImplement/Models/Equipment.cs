@@ -17,7 +17,7 @@ namespace SecuritySystemDatabaseImplement.Models
         [Required]
         public decimal Cost { get; set; }
 
-        public virtual EquipmentRaw EquipmentRaw { get; set; }
+        public virtual List<EquipmentRaw> EquipmentRaw { get; set; }
 
         public virtual List<Order> Orders { get; set; }
     }
