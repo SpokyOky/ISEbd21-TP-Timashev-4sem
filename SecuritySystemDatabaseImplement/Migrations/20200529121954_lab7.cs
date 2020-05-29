@@ -7,6 +7,10 @@ namespace SecuritySystemDatabaseImplement.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropIndex(
+                name: "IX_EquipmentRaws_EquipmentId",
+                table: "EquipmentRaws");
+
             migrationBuilder.CreateTable(
                 name: "MessageInfoes",
                 columns: table => new
@@ -30,6 +34,11 @@ namespace SecuritySystemDatabaseImplement.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_EquipmentRaws_EquipmentId",
+                table: "EquipmentRaws",
+                column: "EquipmentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MessageInfoes_ClientId",
                 table: "MessageInfoes",
                 column: "ClientId");
@@ -39,6 +48,16 @@ namespace SecuritySystemDatabaseImplement.Migrations
         {
             migrationBuilder.DropTable(
                 name: "MessageInfoes");
+
+            migrationBuilder.DropIndex(
+                name: "IX_EquipmentRaws_EquipmentId",
+                table: "EquipmentRaws");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EquipmentRaws_EquipmentId",
+                table: "EquipmentRaws",
+                column: "EquipmentId",
+                unique: true);
         }
     }
 }
