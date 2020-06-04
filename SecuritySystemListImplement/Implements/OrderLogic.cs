@@ -13,10 +13,12 @@ namespace SecuritySystemListImplement.Implements
     public class OrderLogic : IOrderLogic
     {
         private readonly DataListSingleton source;
+
         public OrderLogic()
         {
             source = DataListSingleton.GetInstance();
         }
+
         public void CreateOrUpdate(OrderBindingModel model)
         {
             Order tempOrder = model.Id.HasValue ? null : new Order

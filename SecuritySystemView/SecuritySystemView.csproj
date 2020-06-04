@@ -151,6 +151,10 @@
       <Project>{7895921a-626a-4a1b-bc8c-c2467626acc3}</Project>
       <Name>SecurityBusinessLogic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SecuritySystemFileImplement\SecuritySystemFileImplement.csproj">
+      <Project>{707cdefd-5543-4c4b-8608-b66c5f3bb086}</Project>
+      <Name>SecuritySystemFileImplement</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SecuritySystemListImplement\SecuritySystemListImplement.csproj">
       <Project>{accbdbcf-5afd-4411-8e4e-8d33a0490123}</Project>
       <Name>SecuritySystemListImplement</Name>
