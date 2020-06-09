@@ -20,6 +20,7 @@ namespace SecuritySystemView
         public new IUnityContainer Container { get; set; }
 
         public int Id { set { id = value; } }
+
         private readonly IEquipmentLogic logic;
         private int? id;
         private Dictionary<int, (string, int)> equipmentRaws;
@@ -36,10 +37,8 @@ namespace SecuritySystemView
             {
                 try
                 {
-                    EquipmentViewModel view = logic.Read(new EquipmentBindingModel
-                    {
-                        Id = id.Value
-                    })?[0];
+                    EquipmentViewModel view = logic.Read(new EquipmentBindingModel { Id = id })?[0];
+
                     if (view != null)
                     {
                         textBoxName.Text = view.EquipmentName;
@@ -50,8 +49,7 @@ namespace SecuritySystemView
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
@@ -67,23 +65,27 @@ namespace SecuritySystemView
                 if (equipmentRaws != null)
                 {
                     dataGridView.Rows.Clear();
+                    dataGridView.ColumnCount = 3;
+                    dataGridView.Columns[0].Visible = false;
+                    dataGridView.Columns[1].HeaderText = "Компонент";
+                    dataGridView.Columns[2].HeaderText = "Количество";
+                    dataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                     foreach (var pc in equipmentRaws)
                     {
-                        dataGridView.Rows.Add(new object[] { pc.Key, pc.Value.Item1,
-pc.Value.Item2 });
-                    }
+                        dataGridView.Rows.Add(new object[] { pc.Key, pc.Value.Item1, pc.Value.Item2 });
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormEquipmentRaw>();
+
             if (form.ShowDialog() == DialogResult.OK)
             {
                 if (equipmentRaws.ContainsKey(form.Id))
@@ -94,6 +96,7 @@ pc.Value.Item2 });
                 {
                     equipmentRaws.Add(form.Id, (form.RawName, form.Count));
                 }
+
                 LoadData();
             }
         }
@@ -103,6 +106,7 @@ pc.Value.Item2 });
             if (dataGridView.SelectedRows.Count == 1)
             {
                 var form = Container.Resolve<FormEquipmentRaw>();
+
                 int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 form.Id = id;
                 form.Count = equipmentRaws[id].Item2;
@@ -110,7 +114,7 @@ pc.Value.Item2 });
                 {
                     equipmentRaws[form.Id] = (form.RawName, form.Count);
                     LoadData();
-                }
+                }
             }
         }
 
@@ -118,19 +122,17 @@ pc.Value.Item2 });
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                if (MessageBox.Show("Удалить запись", "Вопрос", MessageBoxButtons.YesNo,
-               MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show("Удалить запись", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     try
                     {
-
-                        equipmentRaws.Remove(Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value));
+                        equipmentRaws.Remove(dataGridView.SelectedRows[0].Cells[0].RowIndex);
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                       MessageBoxIcon.Error);
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+
                     LoadData();
                 }
             }
@@ -145,22 +147,22 @@ pc.Value.Item2 });
         {
             if (string.IsNullOrEmpty(textBoxName.Text))
             {
-                MessageBox.Show("Заполните название", "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show("Заполните название", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             if (string.IsNullOrEmpty(textBoxCost.Text))
             {
-                MessageBox.Show("Заполните цену", "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show("Заполните цену", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             if (equipmentRaws == null || equipmentRaws.Count == 0)
             {
-                MessageBox.Show("Заполните компоненты", "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show("Заполните компоненты", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             try
             {
                 logic.CreateOrUpdate(new EquipmentBindingModel
@@ -170,22 +172,21 @@ pc.Value.Item2 });
                     Cost = Convert.ToDecimal(textBoxCost.Text),
                     EquipmentRaws = equipmentRaws
                 });
-                MessageBox.Show("Сохранение прошло успешно", "Сообщение",
-               MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;
+
                 Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
-            Close();
+            DialogResult = DialogResult.Cancel; Close();
         }
     }
 }
