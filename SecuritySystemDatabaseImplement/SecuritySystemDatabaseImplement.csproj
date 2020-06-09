@@ -166,9 +166,9 @@
     <Compile Include="Implements\EquipmentLogic.cs" />
     <Compile Include="Implements\OrderLogic.cs" />
     <Compile Include="Implements\RawLogic.cs" />
-    <Compile Include="Migrations\20200524195709_Initial-Create.cs" />
-    <Compile Include="Migrations\20200524195709_Initial-Create.designer.cs">
-      <DependentUpon>20200524195709_Initial-Create.cs</DependentUpon>
+    <Compile Include="Migrations\20200529095630_lab4.cs" />
+    <Compile Include="Migrations\20200529095630_lab4.designer.cs">
+      <DependentUpon>20200529095630_lab4.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\20200529101406_lab5.cs" />
     <Compile Include="Migrations\20200529101406_lab5.designer.cs">
