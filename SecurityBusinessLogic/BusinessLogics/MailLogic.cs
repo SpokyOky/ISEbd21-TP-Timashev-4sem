@@ -60,8 +60,7 @@ namespace SecurityBusinessLogic.BusinessLogics
                         objSmtpClient.EnableSsl = true;
                         objSmtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                         objSmtpClient.Credentials = new NetworkCredential(mailLogin, mailPassword);
-
-                        await Task.Run(() => objSmtpClient.SendAsync(objMailMessage, null));
+                        objSmtpClient.Send(objMailMessage);
                     }
                     catch (Exception)
                     {
