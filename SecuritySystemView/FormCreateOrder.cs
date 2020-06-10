@@ -48,7 +48,7 @@ namespace SecuritySystemView
 
         private void CalcSum()
         {
-            if (comboBoxEquipment.SelectedValue != null &&
+            if (comboBoxEquipment.SelectedValue != null &&z
            !string.IsNullOrEmpty(textBoxCount.Text))
             {
                 try
@@ -57,7 +57,8 @@ namespace SecuritySystemView
                     EquipmentViewModel Equipment = logicE.Read(new EquipmentBindingModel
                     {
                         Id = id
-                    })?[0];
+                    })?[0];
+
                     int count = Convert.ToInt32(textBoxCount.Text);
                     textBoxSum.Text = (count * Equipment?.Cost ?? 0).ToString();
                 }
@@ -117,6 +118,7 @@ namespace SecuritySystemView
         {
             DialogResult = DialogResult.Cancel;
             Close();
-        }
+        }
+
     }
 }
