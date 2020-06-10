@@ -61,7 +61,6 @@
             this.Controls.Add(this.reportViewer);
             this.Name = "FormReportEquipmentRaws";
             this.Text = "Компоненты и изделия";
-            this.Load += new System.EventHandler(this.FormReportEquipmentRaws_Load);
             this.ResumeLayout(false);
 
         }

@@ -48,7 +48,7 @@ namespace SecuritySystemView
 
         private void CalcSum()
         {
-            if (comboBoxEquipment.SelectedValue != null &&z
+            if (comboBoxEquipment.SelectedValue != null &&
            !string.IsNullOrEmpty(textBoxCount.Text))
             {
                 try
