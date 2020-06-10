@@ -92,13 +92,12 @@ namespace SecuritySystemListImplement.Implements
                     result.Add(CreateViewModel(order));
                     break;
                 }
-
                 result.Add(CreateViewModel(order));
             }
 
             return result;
         }
-
+        
         private OrderViewModel CreateViewModel(Order order)
         {
             string equipmentName = null;
