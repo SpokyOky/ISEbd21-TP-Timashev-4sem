@@ -57,10 +57,5 @@ namespace SecuritySystemView
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        private void FormReportEquipmentRaws_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
