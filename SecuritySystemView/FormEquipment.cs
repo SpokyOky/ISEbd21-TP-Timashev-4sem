@@ -64,7 +64,14 @@ namespace SecuritySystemView
         {
             try
             {
-                Program.ConfigGrid(logic.Read(null), dataGridView);
+                if (equipmentRaws != null)
+                {
+                    dataGridView.Rows.Clear();
+                    foreach (var er in equipmentRaws)
+                    {
+                        dataGridView.Rows.Add(new object[] { er.Key, er.Value.Item1, er.Value.Item2 });
+                    }
+                }
             }
             catch (Exception ex)
             {
