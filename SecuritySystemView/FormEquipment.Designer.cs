@@ -159,7 +159,7 @@
             // Raw
             // 
             this.Raw.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Raw.HeaderText = "Изделие";
+            this.Raw.HeaderText = "Компонент";
             this.Raw.Name = "Raw";
             // 
             // Count
