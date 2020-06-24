@@ -181,6 +181,10 @@
     <Compile Include="Migrations\20200529112451_lab6.designer.cs">
       <DependentUpon>20200529112451_lab6.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20200624150026_release.cs" />
+    <Compile Include="Migrations\20200624150026_release.designer.cs">
+      <DependentUpon>20200624150026_release.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\SecuritySystemDatabaseModelSnapshot.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Implementer.cs" />
