@@ -2,7 +2,6 @@
 using SecurityBusinessLogic.Interfaces;
 using SecurityBusinessLogic.ViewModels;
 using SecuritySystemFileImplement.Models;
-using SecuritySystemFileImplemet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +22,11 @@ namespace SecuritySystemFileImplement.Implements
         public void CreateOrUpdate(OrderBindingModel model)
         {
             Order element;
+
             if (model.Id.HasValue)
             {
                 element = source.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+
                 if (element == null)
                 {
                     throw new Exception("Элемент не найден");
@@ -33,12 +34,13 @@ namespace SecuritySystemFileImplement.Implements
             }
             else
             {
-                int maxId = source.Orders.Count > 0 ? source.Orders.Max(rec =>
-               rec.Id) : 0;
+                int maxId = source.Orders.Count > 0 ? source.Orders.Max(rec => rec.Id) : 0;
                 element = new Order { Id = maxId + 1 };
                 source.Orders.Add(element);
             }
+
             element.EquipmentId = model.EquipmentId == 0 ? element.EquipmentId : model.EquipmentId;
+            element.ClientId = model.ClientId == null ? element.ClientId : (int)model.ClientId;
             element.Count = model.Count;
             element.Sum = model.Sum;
             element.Status = model.Status;
@@ -48,8 +50,8 @@ namespace SecuritySystemFileImplement.Implements
 
         public void Delete(OrderBindingModel model)
         {
-            Order element = source.Orders.FirstOrDefault(rec => rec.Id ==
-           model.Id);
+            Order element = source.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+
             if (element != null)
             {
                 source.Orders.Remove(element);
@@ -63,15 +65,19 @@ namespace SecuritySystemFileImplement.Implements
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
             return source.Orders
-            .Where( 
-                    rec => model == null
-                    || (rec.Id == model.Id && model.Id.HasValue)
-                    || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
-                    )
+            .Where(
+                rec => model == null
+                || rec.Id == model.Id
+                || model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo
+                || model.ClientId.HasValue && rec.ClientId == model.ClientId
+            )
             .Select(rec => new OrderViewModel
             {
                 Id = rec.Id,
-                EquipmentName = GetEquipmentName(rec.EquipmentId),
+                ClientId = rec.ClientId,
+                EquipmentId = rec.EquipmentId,
+                ClientFIO = source.Clients.FirstOrDefault(recC => recC.Id == rec.ClientId)?.FIO,
+                EquipmentName = source.Equipments.FirstOrDefault(recP => recP.Id == rec.EquipmentId)?.EquipmentName,
                 Count = rec.Count,
                 Sum = rec.Sum,
                 Status = rec.Status,
@@ -79,14 +85,6 @@ namespace SecuritySystemFileImplement.Implements
                 DateImplement = rec.DateImplement
             })
             .ToList();
-        }
-
-        private string GetEquipmentName(int id)
-        {
-            string name = "";
-            var equipment = source.Equipments.FirstOrDefault(x => x.Id == id);
-            name = equipment != null ? equipment.EquipmentName : "";
-            return name;
         }
     }
 }

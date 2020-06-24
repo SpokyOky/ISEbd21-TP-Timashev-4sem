@@ -8,19 +8,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace SecuritySystemFileImplemet
+namespace SecuritySystemFileImplement
 {
     public class FileDataListSingleton
     {
         private static FileDataListSingleton instance;
+
         private readonly string RawFileName = "Raw.xml";
         private readonly string OrderFileName = "Order.xml";
         private readonly string EquipmentFileName = "Equipment.xml";
         private readonly string EquipmentRawFileName = "EquipmentRaw.xml";
+        private readonly string ClientFileName = "Client.xml";
+
         public List<Raw> Raws { get; set; }
+
         public List<Order> Orders { get; set; }
+
         public List<Equipment> Equipments { get; set; }
+
         public List<EquipmentRaw> EquipmentRaws { get; set; }
+
+        public List<Client> Clients { get; set; }
 
         private FileDataListSingleton()
         {
@@ -28,6 +36,7 @@ namespace SecuritySystemFileImplemet
             Orders = LoadOrders();
             Equipments = LoadEquipments();
             EquipmentRaws = LoadEquipmentRaws();
+            Clients = LoadClients();
         }
 
         public static FileDataListSingleton GetInstance()
@@ -36,6 +45,7 @@ namespace SecuritySystemFileImplemet
             {
                 instance = new FileDataListSingleton();
             }
+
             return instance;
         }
 
@@ -45,15 +55,18 @@ namespace SecuritySystemFileImplemet
             SaveOrders();
             SaveEquipments();
             SaveEquipmentRaws();
+            SaveClients();
         }
 
         private List<Raw> LoadRaws()
         {
             var list = new List<Raw>();
+
             if (File.Exists(RawFileName))
             {
                 XDocument xDocument = XDocument.Load(RawFileName);
                 var xElements = xDocument.Root.Elements("Raw").ToList();
+
                 foreach (var elem in xElements)
                 {
                     list.Add(new Raw
@@ -63,44 +76,48 @@ namespace SecuritySystemFileImplemet
                     });
                 }
             }
+
             return list;
         }
 
         private List<Order> LoadOrders()
         {
             var list = new List<Order>();
+
             if (File.Exists(OrderFileName))
             {
                 XDocument xDocument = XDocument.Load(OrderFileName);
                 var xElements = xDocument.Root.Elements("Order").ToList();
+
                 foreach (var elem in xElements)
                 {
                     list.Add(new Order
                     {
                         Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        ClientId = Convert.ToInt32(elem.Element("ClientId").Value),
                         EquipmentId = Convert.ToInt32(elem.Element("EquipmentId").Value),
                         Count = Convert.ToInt32(elem.Element("Count").Value),
                         Sum = Convert.ToDecimal(elem.Element("Sum").Value),
                         Status = (OrderStatus)Enum.Parse(typeof(OrderStatus),
-                   elem.Element("Status").Value),
-                        DateCreate =
-                   Convert.ToDateTime(elem.Element("DateCreate").Value),
-                        DateImplement =
-                   string.IsNullOrEmpty(elem.Element("DateImplement").Value) ? (DateTime?)null :
-                   Convert.ToDateTime(elem.Element("DateImplement").Value),
+                        elem.Element("Status").Value),
+                        DateCreate = Convert.ToDateTime(elem.Element("DateCreate").Value),
+                        DateImplement = string.IsNullOrEmpty(elem.Element("DateImplement").Value) ? (DateTime?)null : Convert.ToDateTime(elem.Element("DateImplement").Value),
                     });
                 }
             }
+
             return list;
         }
 
         private List<Equipment> LoadEquipments()
         {
             var list = new List<Equipment>();
+
             if (File.Exists(EquipmentFileName))
             {
                 XDocument xDocument = XDocument.Load(EquipmentFileName);
                 var xElements = xDocument.Root.Elements("Equipment").ToList();
+
                 foreach (var elem in xElements)
                 {
                     list.Add(new Equipment
@@ -111,16 +128,19 @@ namespace SecuritySystemFileImplemet
                     });
                 }
             }
+
             return list;
         }
 
         private List<EquipmentRaw> LoadEquipmentRaws()
         {
             var list = new List<EquipmentRaw>();
+
             if (File.Exists(EquipmentRawFileName))
             {
                 XDocument xDocument = XDocument.Load(EquipmentRawFileName);
                 var xElements = xDocument.Root.Elements("EquipmentRaw").ToList();
+
                 foreach (var elem in xElements)
                 {
                     list.Add(new EquipmentRaw
@@ -132,6 +152,31 @@ namespace SecuritySystemFileImplemet
                     });
                 }
             }
+
+            return list;
+        }
+
+        private List<Client> LoadClients()
+        {
+            var list = new List<Client>();
+
+            if (File.Exists(ClientFileName))
+            {
+                XDocument xDocument = XDocument.Load(ClientFileName);
+                var xElements = xDocument.Root.Elements("Client").ToList();
+
+                foreach (var elem in xElements)
+                {
+                    list.Add(new Client
+                    {
+                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        FIO = elem.Element("FIO").Value,
+                        Email = elem.Element("Email").Value,
+                        Password = elem.Element("Password").Value
+                    });
+                }
+            }
+
             return list;
         }
 
@@ -140,25 +185,30 @@ namespace SecuritySystemFileImplemet
             if (Raws != null)
             {
                 var xElement = new XElement("Raws");
+                
                 foreach (var raw in Raws)
                 {
                     xElement.Add(new XElement("Raw",
                     new XAttribute("Id", raw.Id),
                     new XElement("RawName", raw.RawName)));
                 }
+
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(RawFileName);
             }
         }
+
         private void SaveOrders()
         {
             if (Orders != null)
             {
                 var xElement = new XElement("Orders");
+
                 foreach (var order in Orders)
                 {
                     xElement.Add(new XElement("Order",
                     new XAttribute("Id", order.Id),
+                    new XElement("ClientId", order.ClientId),
                     new XElement("EquipmentId", order.EquipmentId),
                     new XElement("Count", order.Count),
                     new XElement("Sum", order.Sum),
@@ -166,6 +216,7 @@ namespace SecuritySystemFileImplemet
                     new XElement("DateCreate", order.DateCreate),
                     new XElement("DateImplement", order.DateImplement)));
                 }
+
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(OrderFileName);
             }
@@ -176,6 +227,7 @@ namespace SecuritySystemFileImplemet
             if (Equipments != null)
             {
                 var xElement = new XElement("Equipments");
+
                 foreach (var equipment in Equipments)
                 {
                     xElement.Add(new XElement("Equipment",
@@ -183,6 +235,7 @@ namespace SecuritySystemFileImplemet
                     new XElement("EquipmentName", equipment.EquipmentName),
                     new XElement("Cost", equipment.Cost)));
                 }
+
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(EquipmentFileName);
             }
@@ -193,6 +246,7 @@ namespace SecuritySystemFileImplemet
             if (EquipmentRaws != null)
             {
                 var xElement = new XElement("EquipmentRaws");
+
                 foreach (var equipmentRaw in EquipmentRaws)
                 {
                     xElement.Add(new XElement("EquipmentRaw",
@@ -201,8 +255,29 @@ namespace SecuritySystemFileImplemet
                     new XElement("RawId", equipmentRaw.RawId),
                     new XElement("Count", equipmentRaw.Count)));
                 }
+
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(EquipmentRawFileName);
+            }
+        }
+
+        private void SaveClients()
+        {
+            if (Clients != null)
+            {
+                var xElement = new XElement("Clients");
+
+                foreach (var client in Clients)
+                {
+                    xElement.Add(new XElement("Client",
+                    new XAttribute("Id", client.Id),
+                    new XElement("FIO", client.FIO),
+                    new XElement("Email", client.Email),
+                    new XElement("Password", client.Password)));
+                }
+
+                XDocument xDocument = new XDocument(xElement);
+                xDocument.Save(ClientFileName);
             }
         }
     }
