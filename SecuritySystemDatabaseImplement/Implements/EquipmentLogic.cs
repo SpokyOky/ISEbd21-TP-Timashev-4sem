@@ -66,13 +66,13 @@ namespace SecuritySystemDatabaseImplement.Implements
                             context.SaveChanges();
                         }
 
-                        foreach (var pc in model.EquipmentRaws)
+                        foreach (var er in model.EquipmentRaws)
                         {
                             context.EquipmentRaws.Add(new EquipmentRaw
                             {
                                 EquipmentId = element.Id,
-                                RawId = pc.Key,
-                                Count = pc.Value.Item2
+                                RawId = er.Key,
+                                Count = er.Value.Item2
                             });
 
                             context.SaveChanges();

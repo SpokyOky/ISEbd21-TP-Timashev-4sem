@@ -2,7 +2,6 @@
 using SecurityBusinessLogic.Enums;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Text;
 
@@ -26,7 +25,7 @@ namespace SecurityBusinessLogic.ViewModels
         {
             "Id",
             "EquipmentName",
-            "Price"
+            "Cost"
         };
     }
 }
