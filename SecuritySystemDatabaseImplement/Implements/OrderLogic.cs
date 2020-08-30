@@ -36,7 +36,7 @@ namespace SecuritySystemDatabaseImplement.Implements
                 }
 
                 element.EquipmentId = model.EquipmentId == 0 ? element.EquipmentId : model.EquipmentId;
-                element.ClientId = model.ClientId.Value;
+                element.ClientId = model.ClientId;
                 element.ImplementerId = model.ImplementerId;
                 element.Count = model.Count;
                 element.Sum = model.Sum;
@@ -75,7 +75,7 @@ namespace SecuritySystemDatabaseImplement.Implements
                     rec => model == null
                     || rec.Id == model.Id && model.Id.HasValue
                     || model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo
-                    || model.ClientId.HasValue && rec.ClientId == model.ClientId
+                    ||  rec.ClientId == model.ClientId
                     || model.FreeOrders.HasValue && model.FreeOrders.Value && !rec.ImplementerId.HasValue
                     || model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется
                 )

@@ -69,7 +69,8 @@ namespace SecuritySystemListImplement.Implements
         {
             order.EquipmentId = model.EquipmentId;
             order.Count = model.Count;
-            order.ClientId = (int)model.ClientId;
+            order.ClientId = model.ClientId;
+            order.ImplementerId = model.ImplementerId;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
             order.Sum = model.Sum;
@@ -87,7 +88,7 @@ namespace SecuritySystemListImplement.Implements
                 if (
                     model != null && order.Id == model.Id
                     || model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo
-                    || model.ClientId.HasValue && order.ClientId == model.ClientId
+                    || order.ClientId == model.ClientId
                     || model.FreeOrders.HasValue && model.FreeOrders.Value
                     || model.ImplementerId.HasValue && order.ImplementerId == model.ImplementerId && order.Status == OrderStatus.Выполняется
                 )
@@ -119,10 +120,45 @@ namespace SecuritySystemListImplement.Implements
                 throw new Exception("Продукт не найден");
             }
 
+            string clientFio = null;
+
+            foreach (var client in source.Clients)
+            {
+                if (client.Id == order.ClientId)
+                {
+                    clientFio = client.FIO;
+                }
+            }
+
+            if (clientFio == null)
+            {
+                throw new Exception("Клиент не найден");
+            }
+
+            string implementerFio = null;
+            if (order.ImplementerId.HasValue)
+            {
+                foreach (var implement in source.Implementers)
+                {
+                    if (implement.Id == order.ImplementerId)
+                    {
+                        clientFio = implement.ImplementerFIO;
+                    }
+                }
+            }
+
+            if (implementerFio == null)
+            {
+                throw new Exception("Исполнитель не найден");
+            }
+
             return new OrderViewModel
             {
                 Id = order.Id,
                 ClientId = order.ClientId,
+                ClientFIO = clientFio,
+                ImplementerId = order.ImplementerId,
+                ImplementerFIO = implementerFio,
                 EquipmentId = order.EquipmentId,
                 EquipmentName = equipmentName,
                 Count = order.Count,
