@@ -125,6 +125,12 @@ namespace SecuritySystemView
             }
         }
 
+        private void buttonMessages_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormMessages>();
+            form.ShowDialog();
+        }
+
         private void компонентыПоИзделиямToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormReportEquipmentRaws>();

@@ -16,7 +16,7 @@ namespace SecuritySystemDatabaseImplement.Implements
         {
             using (var context = new SecuritySystemDatabase())
             {
-                Implementer element = context.Implementers.FirstOrDefault(rec => 
+                Implementer element = context.Implementers.FirstOrDefault(rec =>
                     rec.ImplementerFIO == model.ImplementerFIO && rec.Id != model.Id);
 
                 if (element != null)

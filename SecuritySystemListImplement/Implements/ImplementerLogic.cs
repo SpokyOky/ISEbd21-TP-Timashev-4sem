@@ -24,7 +24,7 @@ namespace SecuritySystemListImplement.Implements
             Implementer tempImplementer = model.Id.HasValue ? null : new Implementer { Id = 1 };
             foreach (var implementer in source.Implementers)
             {
-                if (implementer.ImplementerFIO == model.ImplementerFIO 
+                if (implementer.ImplementerFIO == model.ImplementerFIO
                     && implementer.Id != model.Id)
                 {
                     throw new Exception("Уже есть исполнитель с таким ФИО");
