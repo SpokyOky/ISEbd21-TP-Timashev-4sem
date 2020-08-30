@@ -15,7 +15,7 @@ namespace SecuritySystemListImplement.Models
 
         public int EquipmentId { get; set; }
 
-        public int ImplementerId { get; set; }
+        public int? ImplementerId { get; set; }
 
         public int Count { get; set; }
 
