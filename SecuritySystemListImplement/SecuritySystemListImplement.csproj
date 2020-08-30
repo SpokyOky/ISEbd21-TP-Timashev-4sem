@@ -44,11 +44,13 @@
     <Compile Include="DataListSingleton.cs" />
     <Compile Include="Implements\ClientLogic.cs" />
     <Compile Include="Implements\EquipmentLogic.cs" />
+    <Compile Include="Implements\ImplementerLogic.cs" />
     <Compile Include="Implements\OrderLogic.cs" />
     <Compile Include="Implements\RawLogic.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Equipment.cs" />
     <Compile Include="Models\EquipmentRaw.cs" />
+    <Compile Include="Models\Implementer.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Raw.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

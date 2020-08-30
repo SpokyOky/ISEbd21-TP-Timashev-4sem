@@ -24,5 +24,6 @@ namespace SecuritySystemDatabaseImplement
         public virtual DbSet<EquipmentRaw> EquipmentRaws { set; get; }
         public virtual DbSet<Order> Orders { set; get; }
         public virtual DbSet<Client> Clients { set; get; }
+        public virtual DbSet<Implementer> Implementers { set; get; }
     }
 }

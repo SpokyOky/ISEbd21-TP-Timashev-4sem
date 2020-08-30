@@ -31,7 +31,7 @@ namespace SecuritySystemListImplement.Implements
                 }
                 if (!model.Id.HasValue && client.Id >= tempClient.Id)
                 {
-                    tempClient.Id = tempClient.Id + 1;
+                    tempClient.Id = client.Id + 1;
                 }
                 else if (model.Id.HasValue && client.Id == model.Id)
                 {

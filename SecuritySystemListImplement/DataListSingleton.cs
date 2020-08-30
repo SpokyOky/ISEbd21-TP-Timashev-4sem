@@ -21,6 +21,8 @@ namespace SecuritySystemListImplement
 
         public List<Client> Clients { get; set; }
 
+        public List<Implementer> Implementers { get; set; }
+
         private DataListSingleton()
         {
             Raws = new List<Raw>();
@@ -28,6 +30,7 @@ namespace SecuritySystemListImplement
             Equipments = new List<Equipment>();
             EquipmentRaws = new List<EquipmentRaw>();
             Clients = new List<Client>();
+            Implementers = new List<Implementer>();
         }
 
         public static DataListSingleton GetInstance()

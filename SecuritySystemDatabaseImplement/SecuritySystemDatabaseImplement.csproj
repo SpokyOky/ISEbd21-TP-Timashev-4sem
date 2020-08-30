@@ -164,6 +164,7 @@
   <ItemGroup>
     <Compile Include="Implements\ClientLogic.cs" />
     <Compile Include="Implements\EquipmentLogic.cs" />
+    <Compile Include="Implements\ImplementerLogic.cs" />
     <Compile Include="Implements\OrderLogic.cs" />
     <Compile Include="Implements\RawLogic.cs" />
     <Compile Include="Migrations\20200529095630_lab4.cs" />
@@ -174,8 +175,13 @@
     <Compile Include="Migrations\20200529101406_lab5.designer.cs">
       <DependentUpon>20200529101406_lab5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20200529112451_lab6.cs" />
+    <Compile Include="Migrations\20200529112451_lab6.designer.cs">
+      <DependentUpon>20200529112451_lab6.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\SecuritySystemDatabaseModelSnapshot.cs" />
     <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\Implementer.cs" />
     <Compile Include="SecuritySystemDatabase.cs" />
     <Compile Include="Models\Equipment.cs" />
     <Compile Include="Models\EquipmentRaw.cs" />
