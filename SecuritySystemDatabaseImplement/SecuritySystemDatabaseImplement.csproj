@@ -162,6 +162,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implements\BackUpLogic.cs" />
     <Compile Include="Implements\ClientLogic.cs" />
     <Compile Include="Implements\EquipmentLogic.cs" />
     <Compile Include="Implements\ImplementerLogic.cs" />
@@ -179,10 +180,6 @@
     <Compile Include="Migrations\20200529112451_lab6.cs" />
     <Compile Include="Migrations\20200529112451_lab6.designer.cs">
       <DependentUpon>20200529112451_lab6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20200529121954_lab7.cs" />
-    <Compile Include="Migrations\20200529121954_lab7.designer.cs">
-      <DependentUpon>20200529121954_lab7.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\SecuritySystemDatabaseModelSnapshot.cs" />
     <Compile Include="Models\Client.cs" />
