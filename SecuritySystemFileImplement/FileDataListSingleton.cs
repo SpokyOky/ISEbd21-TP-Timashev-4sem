@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace SecuritySystemFileImplement
+namespace SecuritySystemFileImplemet
 {
     public class FileDataListSingleton
     {
@@ -21,6 +21,7 @@ namespace SecuritySystemFileImplement
         public List<Order> Orders { get; set; }
         public List<Equipment> Equipments { get; set; }
         public List<EquipmentRaw> EquipmentRaws { get; set; }
+
         private FileDataListSingleton()
         {
             Raws = LoadRaws();
@@ -28,6 +29,7 @@ namespace SecuritySystemFileImplement
             Equipments = LoadEquipments();
             EquipmentRaws = LoadEquipmentRaws();
         }
+
         public static FileDataListSingleton GetInstance()
         {
             if (instance == null)
@@ -36,6 +38,7 @@ namespace SecuritySystemFileImplement
             }
             return instance;
         }
+
         ~FileDataListSingleton()
         {
             SaveRaws();
@@ -43,6 +46,7 @@ namespace SecuritySystemFileImplement
             SaveEquipments();
             SaveEquipmentRaws();
         }
+
         private List<Raw> LoadRaws()
         {
             var list = new List<Raw>();
@@ -61,6 +65,7 @@ namespace SecuritySystemFileImplement
             }
             return list;
         }
+
         private List<Order> LoadOrders()
         {
             var list = new List<Order>();
@@ -88,6 +93,7 @@ namespace SecuritySystemFileImplement
             }
             return list;
         }
+
         private List<Equipment> LoadEquipments()
         {
             var list = new List<Equipment>();
@@ -107,6 +113,7 @@ namespace SecuritySystemFileImplement
             }
             return list;
         }
+
         private List<EquipmentRaw> LoadEquipmentRaws()
         {
             var list = new List<EquipmentRaw>();
@@ -127,6 +134,7 @@ namespace SecuritySystemFileImplement
             }
             return list;
         }
+
         private void SaveRaws()
         {
             if (Raws != null)
@@ -162,6 +170,7 @@ namespace SecuritySystemFileImplement
                 xDocument.Save(OrderFileName);
             }
         }
+
         private void SaveEquipments()
         {
             if (Equipments != null)
@@ -178,6 +187,7 @@ namespace SecuritySystemFileImplement
                 xDocument.Save(EquipmentFileName);
             }
         }
+
         private void SaveEquipmentRaws()
         {
             if (EquipmentRaws != null)
