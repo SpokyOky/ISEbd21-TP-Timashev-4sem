@@ -64,18 +64,17 @@ namespace SecuritySystemListImplement.Implements
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
             List<OrderViewModel> result = new List<OrderViewModel>();
-            foreach (var Order in source.Orders)
+            foreach (var order in source.Orders)
             {
-                if (model != null)
+                if (
+                    model != null && order.Id == model.Id
+                    || model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo
+                )
                 {
-                    if (Order.Id == model.Id)
-                    {
-                        result.Add(CreateViewModel(Order));
-                        break;
-                    }
-                    continue;
+                    result.Add(CreateViewModel(order));
+                    break;
                 }
-                result.Add(CreateViewModel(Order));
+                result.Add(CreateViewModel(order));
             }
             return result;
         }
